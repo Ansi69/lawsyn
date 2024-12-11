@@ -1,0 +1,68 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block content %}    
+    <div id="main">
+        <br>
+        <br>
+        <br>
+        <p align="center" style="font-size: 270%"><b> Возникли проблемы с сайтом?</b></p>
+        <img class="center" src={% static "main/img/error.png" %} alt="Ошибка загрузки" width="500px" height="300px">
+        <h4 class="physblock">Если вы заметили неправильную работу сайта или опечатки/ошибки в информации, вы можете отправить обращение, которое мы обязательно рассмотрим и решим вашу проблему.
+             <br>
+        </h4>
+        <h4>    
+        -Просим по возможности умещать все проблемы в одну отправку.
+             <br>    
+        -Будьте терпеливее, возможно возник большой сбой, в котором мы уже разбираемся.
+        </h4>    
+        <br>
+        <br>
+        <div class="fr">
+            {% if user.is_authenticated %}
+                <form action="{% url 'userHelp' %}" method="post" id="form_message" align="center" >
+                    <h2>Форма для связи с нами:</h2>
+                    <br>
+                    
+                    <div class="titles">Ваше имя*</div>
+                    <input name="name" id="id_name" value="">
+                    
+                    <div class="titles">Электронная почта*</div>
+                    <input name="email" id="id_email" value=" ">
+                    
+                    <div class="titles">Тема сообщения*</div>
+                    <input  name="topik" id="id_topik" value=" ">
+                    
+                    <div class="titles">Текст сообщения:*</div>
+                    <input name="HelpText" id="id_HelpText" value=" ">
+                    
+                    {% if form.email.errors %}
+                    <ul class="errorlist nonfield" id="ErrorForm4">
+                        {% for field in form %}
+                        {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {% csrf_token %}
+                    <h1><button id="submit" type="submit">Отправить</button></h1> 
+                </form>
+            {% else %}
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>    
+{% endblock  %}

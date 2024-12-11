@@ -1,0 +1,927 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block content %}
+<script src="modal.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.6.4/math.js"
+        integrity="sha512-BbVEDjbqdN3Eow8+empLMrJlxXRj5nEitiCAK5A1pUr66+jLVejo3PmjIaucRnjlB0P9R3rBUs3g5jXc8ti+fQ=="
+        crossorigin="anonymous" 
+        referrerpolicy="no-referrer">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.6.4/math.min.js"
+        integrity="sha512-iphNRh6dPbeuPGIrQbCdbBF/qcqadKWLa35YPVfMZMHBSI6PLJh1om2xCTWhpVpmUyb4IvVS9iYnnYMkleVXLA=="
+        crossorigin="anonymous" 
+        referrerpolicy="no-referrer">
+</script>
+<div id="main">
+        <br>
+        <br>
+        <br>
+        <p align="center" style="font-size: 180%">Заметки</p>
+        {% if user.is_authenticated %}
+          <form action="{% url 'TextSave' %}" method="post" id="textForm">
+            <div align="center">
+                <p align="center" style="font-size: 180%">Сделайте нужные вам заметки</p>
+                <div>
+                    <textarea class="textInput"
+                    name="text" id="text1">{{ form.text_column.text1 }}{{ text1|escape }}
+                    </textarea>
+                </div>
+                <button type="submit" class="SaveBtn">Сохранить</button>
+                {% csrf_token %}
+            </div>
+          </form>
+        {% else %}
+        {% endif %}
+
+        <p align="center" style="font-size: 180%">Калькулятор</p>
+        
+        <table id="calcu">
+        <tr>
+            <td colspan="3"><input type="text" id="result"></td>
+            <!-- clr() function will call clr to clear all value -->
+            <td><input type="button" value="c" onclick="clr()" /> </td>
+        </tr>
+        <tr>
+            <!-- create button and assign value to each button -->
+            <!-- dis("1") will call function dis to display value -->
+            <td><input type="button" value="1" onclick="dis('1')" 
+                        onkeydown="myFunction(event)"> </td>
+            <td><input type="button" value="2" onclick="dis('2')" 
+                        onkeydown="myFunction(event)"> </td>
+            <td><input type="button" value="3" onclick="dis('3')" 
+                        onkeydown="myFunction(event)"> </td>
+            <td><input type="button" value="/" onclick="dis('/')" 
+                        onkeydown="myFunction(event)"> </td>
+        </tr>
+        <tr>
+            <td><input type="button" value="4" onclick="dis('4')" 
+                        onkeydown="myFunction(event)"> </td>
+            <td><input type="button" value="5" onclick="dis('5')" 
+                        onkeydown="myFunction(event)"> </td>
+            <td><input type="button" value="6" onclick="dis('6')" 
+                        onkeydown="myFunction(event)"> </td>
+            <td><input type="button" value="*" onclick="dis('*')" 
+                        onkeydown="myFunction(event)"> </td>
+        </tr>
+        <tr>
+            <td><input type="button" value="7" onclick="dis('7')" 
+                        onkeydown="myFunction(event)"> </td>
+            <td><input type="button" value="8" onclick="dis('8')" 
+                        onkeydown="myFunction(event)"> </td>
+            <td><input type="button" value="9" onclick="dis('9')" 
+                        onkeydown="myFunction(event)"> </td>
+            <td><input type="button" value="-" onclick="dis('-')"
+                        onkeydown="myFunction(event)"> </td>
+        </tr>
+        <tr>
+            <td><input type="button" value="0" onclick="dis('0')" 
+                        onkeydown="myFunction(event)"> </td>
+            <td><input type="button" value="." onclick="dis('.')" 
+                        onkeydown="myFunction(event)"> </td>
+            <!-- solve function call function solve to evaluate value -->
+            <td><input type="button" value="=" onclick="solve()"> </td>
+  
+            <td><input type="button" value="+" onclick="dis('+')" 
+                        onkeydown="myFunction(event)"> </td>
+        </tr>
+    </table>
+  
+    <script>
+        // Function that display value
+        function dis(val) {
+            document.getElementById("result").value += val
+        }
+  
+        function myFunction(event) {
+            if (event.key == '0' || event.key == '1' 
+                || event.key == '2' || event.key == '3'
+                || event.key == '4' || event.key == '5' 
+                || event.key == '6' || event.key == '7'
+                || event.key == '8' || event.key == '9' 
+                || event.key == '+' || event.key == '-'
+                || event.key == '*' || event.key == '/')
+                document.getElementById("result").value += event.key;
+        }
+  
+        var cal = document.getElementById("calcu");
+        cal.onkeyup = function (event) {
+            if (event.keyCode === 13) {
+                console.log("Enter");
+                let x = document.getElementById("result").value
+                console.log(x);
+                solve();
+            }
+        }
+  
+        // Function that evaluates the digit and return result
+        function solve() {
+            let x = document.getElementById("result").value
+            let y = math.evaluate(x)
+            document.getElementById("result").value = y
+        }
+  
+        // Function that clear the display
+        function clr() {
+            document.getElementById("result").value = ""
+        }
+    </script>
+
+        <br>
+        <br>
+        <br>
+        
+        <p align="center" style="font-size: 180%">Физические Величины</p>
+        <h4>Прежде всего. Что такое физическая величина? Физическая величина — это одно из свойств материальных объектов (физической системы, явления или процесса), общее в качественном отношении для многих физических объектов, но по количественной характеристике индивидуальное для каждого из них</h4>
+        
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p align="center" style="font-size: 180%">Список физических величин</p>
+       
+        <br>
+        <br>
+        
+        
+<!-- Ссылки на вызов модальных окон-->
+ <a href="#win1" class="button">l или a - длина</a>
+ <a href="#win2" class="button">b - ширина</a>
+ <a href="#win3" class="button">c или h - ширина</a>
+ <a href="#win4" class="button">S - площадь</a>     
+ <a href="#win5" class="button">V - объем</a>
+ <a href="#win6" class="button">t° - температура</a>      
+ <a href="#win7" class="button">t - время</a>
+ <a href="#win8" class="button">s - путь</a>  
+ <a href="#win9" class="button">v - скорость</a>
+ <a href="#win10" class="button">m - масса</a>  
+ <a href="#win11" class="button">ρ - плотность</a>
+ <a href="#win12" class="button">F - сила</a>  
+ <a href="#win13" class="button">g - ускорение свободного падения</a>
+ <a href="#win14" class="button">k - жесткость</a>      
+ <a href="#win15" class="button">μ - коэфицент трения</a>
+ <a href="#win16" class="button">P - вес тела</a>  
+ <a href="#win17" class="button">p - давление</a>
+ <a href="#win18" class="button">A - механическая работа</a>  
+ <a href="#win19" class="button">N - мощность</a>
+ <a href="#win20" class="button">M - момент силы</a>      
+ <a href="#win21" class="button">η - коэффицент полезного действия(КПД)</a>        
+ <a href="#win22" class="button">E - энергия</a>       
+ <a href="#win23" class="button">Q - количество теплоты</a>       
+ <a href="#win24" class="button">с - удельная теплоемкость</a>        
+ <a href="#win25" class="button">q - удельная теплота сгорания</a>        
+ <a href="#win26" class="button">λ - удельная теплота плавления</a>        
+ <a href="#win27" class="button">ф - влажность</a> 
+ <a href="#win28" class="button">L - удельная теплота парообразования и конденсации</a>
+ <a href="#win29" class="button">q - электрический заряд</a>
+ <a href="#win30" class="button">I - сила тока</a>        
+ <a href="#win31" class="button">U - электрическое напряжение</a>        
+ <a href="#win32" class="button">R - электрическое сопротивление</a>        
+ <a href="#win33" class="button">ρ - удельное сопротивление</a>        
+ <a href="#win34" class="button">А - работа электрического тока</a>         
+ <a href="#win35" class="button">P - мощность электрического тока</a>  
+ <a href="#win36" class="button">n - показатель преломления</a>        
+ <a href="#win37" class="button">F - фокусное расстояние</a>        
+ <a href="#win38" class="button">D - оптическая сила линзы</a>        
+ <a href="#win39" class="button">s - пермещение</a>        
+ <a href="#win40" class="button">x, y - координаты</a>        
+ <a href="#win41" class="button">a - ускорение</a>        
+ <a href="#win42" class="button">g - ускорение свободного падения</a>        
+ <a href="#win43" class="button">G- гравитационная постоянная</a>        
+ <a href="#win44" class="button">r, R - расстояние, радиус</a>        
+ <a href="#win45" class="button">p - импульс тела</a>      
+ <a href="#win46" class="button">T - период колебания</a>       
+ <a href="#win47" class="button">v - частоа колебания</a>       
+ <a href="#win48" class="button">A - амплитуда колебания</a>       
+ <a href="#win49" class="button">ф - фаза колебания</a>       
+ <a href="#win50" class="button">λ - длина волны</a>       
+ <a href="#win51" class="button">B - магнитная индукция</a>       
+ <a href="#win52" class="button">ф - магнитный поток</a>       
+ <a href="#win53" class="button">C - электрическая ёмкость</a>
+ <a href="#win54" class="button">L - индуктивность</a>       
+ <a href="#win55" class="button">c - скорость света</a>       
+ <a href="#win56" class="button">D - поглощенная доза излучения</a>       
+ <a href="#win57" class="button">H - эквивалентная доза</a>       
+        
+        
+        
+<!-- Модальное окно №1 -->
+   <a href="#x" class="overlay" id="win1"></a>
+   <div class="popup">
+     Единица измерения(СИ) - м(метр)
+       <br>
+     Расчетная формула - Отсутсвует
+       <br>
+     Прибор для измерения - линейка, рулетка, штангенциркуль, микрометр
+    <a class="close"title="Закрыть" href="#close"></a>
+    </div>
+        
+<!-- Модальное окно №2 -->
+    <a href="#x" class="overlay" id="win2"></a>
+    <div class="popup">
+    Единица измерения(СИ) - м(метр)
+       <br>
+     Расчетная формула - Отсутсвует
+       <br>
+     Прибор для измерения - линейка, рулетка, штангенциркуль, микрометр
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>
+        
+<!-- Модальное окно №3 -->
+    <a href="#x" class="overlay" id="win3"></a>
+    <div class="popup">
+    Единица измерения(СИ) - м(метр)
+       <br>
+     Расчетная формула - Отсутсвует
+       <br>
+     Прибор для измерения - линейка, рулетка, штангенциркуль, микрометр
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>
+        
+<!-- Модальное окно №4 -->
+    <a href="#x" class="overlay" id="win4"></a>
+    <div class="popup">
+    Единица измерения(СИ) - м^2(метр в квадртае)
+       <br>
+     Расчетная формула - S=a*b
+       <br>
+     Прибор для измерения - расчетная формула
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>
+    
+<!-- Модальное окно №5 -->
+    <a href="#x" class="overlay" id="win5"></a>
+    <div class="popup">
+    Единица измерения(СИ) - м^3(метр в кубе)
+       <br>
+     Расчетная формула - V=a*b*c
+       <br>
+     Прибор для измерения - расчетная формула
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>
+        
+ <!-- Модальное окно №6 -->
+    <a href="#x" class="overlay" id="win6"></a>
+    <div class="popup">
+    Единица измерения(СИ) - С°, F° (цельсия, фаренгейт)
+       <br>
+     Расчетная формула - отсутсвует
+       <br>
+     Прибор для измерения - термометр
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>       
+        
+ <!-- Модальное окно №7 -->
+    <a href="#x" class="overlay" id="win7"></a>
+    <div class="popup">
+    Единица измерения(СИ) - с(секунда)
+       <br>
+     Расчетная формула - t=s/v
+       <br>
+     Прибор для измерения - часы, секундомер
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>       
+        
+    <!-- Модальное окно №8 -->
+    <a href="#x" class="overlay" id="win8"></a>
+    <div class="popup">
+    Единица измерения(СИ) - м(метр)
+       <br>
+     Расчетная формула - s=v*t
+       <br>
+     Прибор для измерения - линейка, рулетка, штангенциркуль, микрометр
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+     <!-- Модальное окно №9 -->
+    <a href="#x" class="overlay" id="win9"></a>
+    <div class="popup">
+    Единица измерения(СИ) - м/с
+       <br>
+     Расчетная формула - v=s/t
+       <br>
+     Прибор для измерения - спидометр
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>    
+        
+     <!-- Модальное окно №10 -->
+    <a href="#x" class="overlay" id="win10"></a>
+    <div class="popup">
+    Единица измерения(СИ) - кг(килограмм)
+       <br>
+     Расчетная формула - отсутсвует
+       <br>
+     Прибор для измерения - весы
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+     <!-- Модальное окно №11 -->
+    <a href="#x" class="overlay" id="win11"></a>
+    <div class="popup">
+    Единица измерения(СИ) - кг/м3(килограмм на метр в кубе)
+       <br>
+     Расчетная формула - ρ=m/V
+       <br>
+     Прибор для измерения - расчетная величина
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+     <!-- Модальное окно №12 -->
+    <a href="#x" class="overlay" id="win12"></a>
+    <div class="popup">
+     F(тяж)
+        <br>
+    Единица измерения(СИ) - H(Ньютона)
+       <br>
+     Расчетная формула - F=m·g
+       <br>
+     Прибор для измерения - динамометр
+        <br>
+         <br>
+        F(упр)
+        <br>
+    Единица измерения(СИ) - H(Ньютона)
+       <br>
+     Расчетная формула - 	F=k·Δl
+       <br>
+     Прибор для измерения - динамометр
+        <br>
+         <br>
+        F(тр)
+        <br>
+    Единица измерения(СИ) - H(Ньютона)
+       <br>
+     Расчетная формула - F=μ·N
+       <br>
+     Прибор для измерения - динамометр
+        <br>
+         <br>
+        N(нормального давления)
+        <br>
+    Единица измерения(СИ) - H(Ньютона)
+       <br>
+     Расчетная формула - N=m·g
+       <br>
+     Прибор для измерения - динамометр
+        <br>
+         <br>
+          R(равнодействующая)
+        <br>
+    Единица измерения(СИ) - R=F1+F2 R=F2-F1
+       <br>
+     Расчетная формула - отсутсвует
+       <br>
+     Прибор для измерения - динамометр
+        <br>
+         <br>
+          F(архмиеда)
+        <br>
+    Единица измерения(СИ) - H(Ньютона)
+       <br>
+     Расчетная формула - F=g·ρж·Vт
+       <br>
+     Прибор для измерения - динамометр
+        <br>
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+     <!-- Модальное окно №13 -->
+    <a href="#x" class="overlay" id="win13"></a>
+    <div class="popup">
+        Единица измерения(СИ) - Н/кг(ньютон на килограмм)
+       <br>
+     Расчетная формула - g=9,8 Н/к
+       <br>
+     Прибор для измерения - постоянная величина
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+     <!-- Модальное окно №14 -->
+    <a href="#x" class="overlay" id="win14"></a>
+    <div class="popup">
+    Единица измерения(СИ) - Н/кг(ньютон на килограмм)
+       <br>
+     Расчетная формула - отсутсвует
+       <br>
+     Прибор для измерения - табличные значения
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+     <!-- Модальное окно №15 -->
+    <a href="#x" class="overlay" id="win15"></a>
+    <div class="popup">
+    Единица измерения(СИ) - безразмерная
+       <br>
+     Расчетная формула - отсутсвует
+       <br>
+     Прибор для измерения - табличные значения
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+     <!-- Модальное окно №16 -->
+    <a href="#x" class="overlay" id="win16"></a>
+    <div class="popup">
+    Единица измерения(СИ) - H(Ньютона)
+       <br>
+     Расчетная формула - 	P=m·g
+       <br>
+     Прибор для измерения - динамометр
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>    
+        
+     <!-- Модальное окно №17 -->
+    <a href="#x" class="overlay" id="win17"></a>
+    <div class="popup">
+        p
+        <br>
+    Единица измерения(СИ) - Па(паскаль)
+       <br>
+     Расчетная формула - 	p=F/S
+       <br>
+     Прибор для измерения - манометр
+        <br>
+        <br>
+         p
+        <br>
+    Единица измерения(СИ) - мм рт. ст.(миллиметр ртутного столба)
+       <br>
+     Расчетная формула - 	1 мм рт. ст.=133,3 Па
+       <br>
+     Прибор для измерения - барометр, барометр-анероид
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+     <!-- Модальное окно №18 -->
+    <a href="#x" class="overlay" id="win18"></a>
+    <div class="popup">
+    Единица измерения(СИ) - Дж(джоуль)
+       <br>
+     Расчетная формула - 	А=F·s
+       <br>
+     Прибор для измерения - расчетная величина
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+     <!-- Модальное окно №19 -->
+    <a href="#x" class="overlay" id="win19"></a>
+    <div class="popup">
+    Единица измерения(СИ) - Вт(Ватт)
+       <br>
+     Расчетная формула - N=A/t
+       <br>
+     Прибор для измерения - расчетная величина
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+     <!-- Модальное окно №20 -->
+    <a href="#x" class="overlay" id="win20"></a>
+    <div class="popup">
+    Единица измерения(СИ) - Н·м(ньютон на метр)
+       <br>
+     Расчетная формула - М=F·l
+       <br>
+     Прибор для измерения - расчетная величина
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+     <!-- Модальное окно №21 -->
+    <a href="#x" class="overlay" id="win21"></a>
+    <div class="popup">
+    Единица измерения(СИ) - %(проценты)
+       <br>
+     Расчетная формула - η=(Ап/Аз)100%
+       <br>
+     Прибор для измерения - расчетная величина
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+     <!-- Модальное окно №22 -->
+    <a href="#x" class="overlay" id="win22"></a>
+    <div class="popup">
+        E(кинитическая)
+        <br>
+    Единица измерения(СИ) - Дж(джоуль)
+       <br>
+     Расчетная формула - Ек=m·v2/2
+       <br>
+     Прибор для измерения - расчетная величина
+        <br>
+        <br>
+        E(потенциальная)
+        <br>
+    Единица измерения(СИ) - Дж(джоуль)
+       <br>
+     Расчетная формула - 	Eп=m·g·h
+       <br>
+     Прибор для измерения - расчетная величина
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+     <!-- Модальное окно №23 -->
+    <a href="#x" class="overlay" id="win23"></a>
+    <div class="popup">
+    Единица измерения(СИ) - Дж(джоуль)
+       <br>
+     Расчетная формула - Q=c*m* (t 2 -t 1)
+       <br>
+     Прибор для измерения - расчетная величина
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>
+        
+    <!-- Модальное окно №24 -->
+    <a href="#x" class="overlay" id="win24"></a>
+    <div class="popup">
+    Единица измерения(СИ) - Дж/(кг·0С)(джоуль на килограмм-градус Цельсия)
+       <br>
+     Расчетная формула - отсутсвует
+       <br>
+     Прибор для измерения - табличные значения
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>    
+        
+     <!-- Модальное окно №25 -->
+    <a href="#x" class="overlay" id="win25"></a>
+    <div class="popup">
+    Единица измерения(СИ) - Дж/кг(джоуль на килограмм)
+       <br>
+     Расчетная формула - отсутсвует
+       <br>
+     Прибор для измерения - табличные значения
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>   
+        
+    <!-- Модальное окно №26 -->
+    <a href="#x" class="overlay" id="win26"></a>
+    <div class="popup">
+    Единица измерения(СИ) - Дж/кг(джоуль на килограмм)
+       <br>
+     Расчетная формула - отсутсвует
+       <br>
+     Прибор для измерения - табличные значения
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>    
+        
+    <!-- Модальное окно №27 -->
+    <a href="#x" class="overlay" id="win27"></a>
+    <div class="popup">
+    Единица измерения(СИ) - %(проценты)
+       <br>
+     Расчетная формула - φ=(ρ/ρ0)·100%
+       <br>
+     Прибор для измерения - гигрометр, психрометр
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>    
+        
+    <!-- Модальное окно №28 -->
+    <a href="#x" class="overlay" id="win28"></a>
+    <div class="popup">
+    Единица измерения(СИ) - Дж/кг(джоуль на килограмм)
+       <br>
+     Расчетная формула - отсутсвует
+       <br>
+     Прибор для измерения - табличные значения
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>    
+        
+    <!-- Модальное окно №29 -->
+    <a href="#x" class="overlay" id="win29"></a>
+    <div class="popup">
+    Единица измерения(СИ) - Кл(кулон)
+       <br>
+     Расчетная формула - отсутсвует
+       <br>
+     Прибор для измерения - электромер
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>    
+        
+    <!-- Модальное окно №30 -->
+    <a href="#x" class="overlay" id="win30"></a>
+    <div class="popup">
+    Единица измерения(СИ) - А(ампер)
+       <br>
+     Расчетная формула - I=q/t
+       <br>
+     Прибор для измерения - амперметр
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>    
+        
+    <!-- Модальное окно №31 -->
+    <a href="#x" class="overlay" id="win31"></a>
+    <div class="popup">
+    Единица измерения(СИ) - В(вольт)
+       <br>
+     Расчетная формула - 	u=A/q
+       <br>
+     Прибор для измерения - вольтметр
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>    
+        
+    <!-- Модальное окно №32 -->
+    <a href="#x" class="overlay" id="win32"></a>
+    <div class="popup">
+    Единица измерения(СИ) - Ом
+       <br>
+     Расчетная формула - R=ρl/S
+       <br>
+     Прибор для измерения - расчетная величина, омметр
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>    
+        
+    <!-- Модальное окно №33 -->
+    <a href="#x" class="overlay" id="win33"></a>
+    <div class="popup">
+    Единица измерения(СИ) - Ом·мм2/м(ом-миллиметр в квадрате на метр)
+       <br>
+     Расчетная формула - отсутсвует
+       <br>
+     Прибор для измерения - табличные значения
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>    
+        
+    <!-- Модальное окно №34 -->
+    <a href="#x" class="overlay" id="win34"></a>
+    <div class="popup">
+    Единица измерения(СИ) - Дж(джоуль); кВт·ч(киловатт в час)
+       <br>
+     Расчетная формула - A=I*U*t
+       <br>
+     Прибор для измерения - электросчетчик
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>    
+        
+    <!-- Модальное окно №35 -->
+    <a href="#x" class="overlay" id="win35"></a>
+    <div class="popup">
+    Единица измерения(СИ) - Вт(ватт)
+       <br>
+     Расчетная формула - P=IU
+       <br>
+     Прибор для измерения - ваттметр 
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>    
+        
+    <!-- Модальное окно №36 -->
+    <a href="#x" class="overlay" id="win36"></a>
+    <div class="popup">
+    Единица измерения(СИ) - безразмерная
+       <br>
+     Расчетная формула - n=sin α/sin β
+       <br>
+     Прибор для измерения - расчетная величина
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>    
+        
+    <!-- Модальное окно №37-->
+    <a href="#x" class="overlay" id="win37"></a>
+    <div class="popup">
+    Единица измерения(СИ) - м(метр)
+       <br>
+     Расчетная формула - отсутсвует
+       <br>
+     Прибор для измерения - линейка, рулетка, штангенциркуль, микрометр
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>    
+        
+    <!-- Модальное окно №38 -->
+    <a href="#x" class="overlay" id="win38"></a>
+    <div class="popup">
+    Единица измерения(СИ) - дптр(диоптрия)
+       <br>
+     Расчетная формула - D=1/F
+       <br>
+     Прибор для измерения - расчетная величина
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>    
+        
+    <!-- Модальное окно №39 -->
+    <a href="#x" class="overlay" id="win39"></a>
+    <div class="popup">
+    Единица измерения(СИ) - м(метр)
+       <br>
+     Расчетная формула - отсутсвует
+       <br>
+     Прибор для измерения - линейка, рулетка, штангенциркуль, микрометр
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+    <!-- Модальное окно №40 -->
+    <a href="#x" class="overlay" id="win40"></a>
+    <div class="popup">
+    Единица измерения(СИ) - м(метр)
+       <br>
+     Расчетная формула - отсутсвует
+       <br>
+     Прибор для измерения - отсутсвует
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+    <!-- Модальное окно №41 -->
+    <a href="#x" class="overlay" id="win41"></a>
+    <div class="popup">
+    Единица измерения(СИ) - м/с2(метр на секунду в квадрате)
+       <br>
+     Расчетная формула - a=(v-v0)/t
+       <br>
+     Прибор для измерения - расчетная величина
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+    <!-- Модальное окно №42 -->
+    <a href="#x" class="overlay" id="win42"></a>
+    <div class="popup">
+    Единица измерения(СИ) - м/с2(метр на секунду в квадрате)
+       <br>
+     Расчетная формула - g=9,806 м/с^2
+       <br>
+     Прибор для измерения - постоянная величина
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+    <!-- Модальное окно №43 -->
+    <a href="#x" class="overlay" id="win43"></a>
+    <div class="popup">
+    Единица измерения(СИ) - Н·м2/кг2(ньютон-метр квадратный на килограмм в квадрате)
+       <br>
+     Расчетная формула - G=6.67·10^-11 Н·м2/кг2
+       <br>
+     Прибор для измерения - постоянная величина
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+    <!-- Модальное окно №44 -->
+    <a href="#x" class="overlay" id="win44"></a>
+    <div class="popup">
+    Единица измерения(СИ) - м(метр)
+       <br>
+     Расчетная формула - отсутсвует
+       <br>
+     Прибор для измерения - линейка, рулетка, штангенциркуль, микрометр
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+    <!-- Модальное окно №45 -->
+    <a href="#x" class="overlay" id="win45"></a>
+    <div class="popup">
+    Единица измерения(СИ) - кг·м/с(килограмм-метр на секунду)
+       <br>
+     Расчетная формула - p=m*v
+       <br>
+     Прибор для измерения - расчетная величина
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+    <!-- Модальное окно №46 -->
+    <a href="#x" class="overlay" id="win46"></a>
+    <div class="popup">
+    Единица измерения(СИ) - с(секунда)
+       <br>
+     Расчетная формула - T=t/N (t - время; N - число колебаний)
+       <br>
+     Прибор для измерения - секундомер
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+    <!-- Модальное окно №47 -->
+    <a href="#x" class="overlay" id="win47"></a>
+    <div class="popup">
+    Единица измерения(СИ) - Гц(герц)
+       <br>
+     Расчетная формула - ν=1/Т
+       <br>
+     Прибор для измерения - частотомер
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+    <!-- Модальное окно №48 -->
+    <a href="#x" class="overlay" id="win48"></a>
+    <div class="popup">
+    Единица измерения(СИ) - м(метр)
+       <br>
+     Расчетная формула - отсутсвует
+       <br>
+     Прибор для измерения - линейка, рулетка, штангенциркуль, микрометр
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+    <!-- Модальное окно №49 -->
+    <a href="#x" class="overlay" id="win49"></a>
+    <div class="popup">
+    Единица измерения(СИ) - рад(радиан)
+       <br>
+     Расчетная формула - отсутсвует
+       <br>
+     Прибор для измерения - отсутсвует
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+    <!-- Модальное окно №50 -->
+    <a href="#x" class="overlay" id="win50"></a>
+    <div class="popup">
+    Единица измерения(СИ) - м(метр)
+       <br>
+     Расчетная формула - λ=vT
+       <br>
+     Прибор для измерения - линейка, рулетка, штангенциркуль, микрометр
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+    <!-- Модальное окно №51 -->
+    <a href="#x" class="overlay" id="win51"></a>
+    <div class="popup">
+    Единица измерения(СИ) - Тл(тесла)
+       <br>
+     Расчетная формула - B=F/I·l
+       <br>
+     Прибор для измерения - расчетная величина
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+    <!-- Модальное окно №52 -->
+    <a href="#x" class="overlay" id="win52"></a>
+    <div class="popup">
+    Единица измерения(СИ) - Вб(вебер)
+       <br>
+     Расчетная формула - ф=B*S*cos a
+       <br>
+     Прибор для измерения - веберметр
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+    <!-- Модальное окно №53 -->
+    <a href="#x" class="overlay" id="win53"></a>
+    <div class="popup">
+    Единица измерения(СИ) - Ф(фарада)
+       <br>
+     Расчетная формула - C=U/q
+       <br>
+     Прибор для измерения - расчетная величина
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+    <!-- Модальное окно №54 -->
+    <a href="#x" class="overlay" id="win54"></a>
+    <div class="popup">
+    Единица измерения(СИ) - Гн(генри)
+       <br>
+     Расчетная формула - L=Ф/I
+       <br>
+     Прибор для измерения - 
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+    <!-- Модальное окно №55 -->
+    <a href="#x" class="overlay" id="win55"></a>
+    <div class="popup">
+    Единица измерения(СИ) - м/с(метр в сеунду)
+       <br>
+     Расчетная формула - с=3·10^8 м/с
+       <br>
+     Прибор для измерения - постоянная величина
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+    <!-- Модальное окно №56 -->
+    <a href="#x" class="overlay" id="win56"></a>
+    <div class="popup">
+    Единица измерения(СИ) - гр(грэй); р(рентген)
+       <br>
+     Расчетная формула - D=E/m
+       <br>
+     Прибор для измерения - отсутсвует
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+    <!-- Модальное окно №57 -->
+    <a href="#x" class="overlay" id="win57"></a>
+    <div class="popup">
+    Единица измерения(СИ) - зв(зиверт)
+       <br>
+     Расчетная формула - H=D·K
+       <br>
+     Прибор для измерения - отсутсвует
+    <a class="close" title="Закрыть" href="#close"></a>
+    </div>     
+        
+        
+        
+        
+    </div>
+    
+    
+    
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+{% endblock  %}

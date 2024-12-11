@@ -1,0 +1,25 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block content %}    
+    <div id="main">
+        <h4>Ниже вы можете ознакомиться с полным списком сборников задач.</h4>
+        <p align="center" style="font-size: 170%"> Выберите нужный вам сборник:</p>
+        {% for ychebnik in sbornik %}
+          <div class="card">
+              <a href="{{ ychebnik.pdf_file.url }}">
+              <img src="{{ ychebnik.img.url }}" alt="Ошибка" style="width:300px;height: 400px">
+              <div class="container">
+                <h2><b>{{ ychebnik.description }}</b><h2> 
+                <h3>{{ ychebnik.author }}</h3> 
+                {% if user.is_authenticated %}
+                <a align="center" style="font-size: 30px"
+                href="{% url 'add_to_favorites' ychebnik.id %}">
+                <p style="font-size: 30px">Добавить в избранное</p></a>
+                {% else %}
+                {% endif %}
+              </div>
+          </div>
+        {% endfor %}       
+    </div>
+{% endblock  %}

@@ -1,0 +1,157 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Lawsyn - мир физики</title>
+    <link rel="icon" type="image/x-icon" href="{% static "main/img/logo.jpg" %}">
+    <link rel="stylesheet" href="{% static "main/css/home.css" %}">
+</head>
+<body>
+    <div id="wrapper">
+        <div class="up">
+            <div class="link">
+                <ul class="ulx">
+                    <li class="active"><a href="{% url "home" %}">Lawsyn - для вас</a></li>
+                    <li style="float: left;"><a href="{% url "rzadach" %}"> Решение задач</a></li>
+                    <li style="float: left;"><a href="{% url "reshebniki" %}">Пособия</a>
+                    <li style="float: right;"><a href="{% url "razrab" %}">О нас</a></li>
+                    {% if user.is_authenticated %}
+                        <li style="float: right;">
+                            <a href="{% url 'logout' %}" class="exit">Выход из аккаунта</a>
+                        <li/>
+                        <li style="float: right;">
+                            <a onclick="showCart()" class="exit">Избранное</a>
+                        <li/>
+                    {% else %}
+                        <li style="float: right;">
+                            <a onclick="showLogin()" class="loginBtn">Вход в аккаунт</a>
+                        <li/>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>  
+    </div>
+    <form id="cart_items_container" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCart()"></span>
+                <div class="headName">Избранное</div>
+                <div id="cart_items">
+                    {% if favorite_books %}
+                        {% for favorite in favorite_books %}
+                            <ul>
+                                <li>
+                                    <h2><b>{{ favorite.book.author }} - {{ favorite.book.description }}</b><h2>
+                                    <a href="{{ favorite.book.pdf_file.url }}">
+                                        <img src="{{ favorite.book.img.url }}" alt="Ошибка" style="width:100px;height: 150px">
+                                    </a>
+                                    <a href="{% url 'remove_from_favorites' favorite.id %}">Удалить из избранного</a>
+                                </li>
+                            </ul>
+                        {% endfor %}
+                    {% else %}
+                        <p style="font-size: 1em">В избранном ничего нет(</p>
+                    {% endif %}
+                    
+                </div>
+        </div>
+    </form>
+
+    <form action="{% url 'login' %}" method="post" id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="close" onclick="closeLogin()"></div>
+            <div class="headName">Вход в аккаунт</div>
+            <div class="field-holdeer">
+                <label for="id_username" class="form-label login">Имя пользователя</label>
+                <input type="text" class="form-control login"
+                value="{% if form.username.value %}{{ form.username.value }}{% endif %}" 
+                name="username" id="id_username" required>
+            </div>
+            <div class="field-holdeer">
+                <label for="id_password" class="form-label login">Пароль</label>
+                <input type="password" class="form-control login" 
+                value="{% if form.password.value %}{{ form.password.value }}{% endif %}" 
+                name="password" id="id_password" required>
+            </div>
+            <button class="enterLogin">Войти</button>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <p id="ErrorForm">{{ form.non_field_errors }}</p>
+            {% endif %}
+
+            <div id="downRegistr">Нет аккаунта?
+                <a onclick="showReg()" class="loginBtn">Зарегистрироваться</a>
+            </div>
+        </div>
+    </form>
+
+    <form action="{% url 'registration' %}" method="post" id="registerModal" class="modal">
+        <div class="modal-content">
+            <div class="close" onclick="closeReg()"></div>
+            <div class="headName">Регистрация</div>
+            <div class="field-holdeer">
+                <label for="id_username1" class="form-label login">Имя пользователя</label>
+                <input type="text" class="form-control login"
+                name="username" id="id_username1" required
+                readonly onfocus="this.removeAttribute('readonly')">
+            </div>
+            {% if user.is_authenticated %}
+            {% else %}
+                {% if formReg.username.errors %}
+                    <p id="ErrorForm2">{{ formReg.username.errors }}</p>
+                {% endif %}
+            {% endif %}
+
+            <div class="field-holdeer">   
+                <label for="id_password1" class="form-label login">Пароль</label>
+                <input type="password" class="form-control login" id="id_password1" 
+                    name="password1" required>
+            </div>
+
+            {% if user.is_authenticated %}
+            {% else %}
+                {% if formReg.password1.errors %}
+                    <p id="ErrorForm2">{{ formReg.password1.errors }}</p>
+                {% endif %}
+            {% endif %}
+
+            <div class="field-holdeer">
+                <label for="id_password2" class="form-label login">Подтверждение пароля</label>
+                <input type="password" class="form-control login" id="id_password2"
+                    name="password2" required>
+            </div>
+            
+            {% if user.is_authenticated %}
+            {% else %}
+                {% if formReg.password2.errors %}
+                    <p id="ErrorForm2">{{ formReg.password2.errors }}</p>
+                {% endif %}
+            {% endif %}
+
+            {% if user.is_authenticated %}
+            {% else %}
+            {% if formReg.non_field_errors %}
+                <p id="ErrorForm2">{{ formReg.non_field_errors }}</p>
+            {% endif %}
+            {% endif %}
+                
+            <button class="enterLogin">Продолжить</button>
+            {% csrf_token %}
+            <div id="downRegistr">Есть аккаунт?
+                <a onclick="showLogin()" class="loginBtn">Войти</a>
+            </div>
+        </div>
+    </form>
+    {% block content %}{% endblock %}
+    <div id="down">
+        <ul id="down">
+            <li style="float: right; color: white"  >Авторское право 2022-2023. Все права защищены.</li>
+        </ul>
+    </div>
+    <script src="{% static 'main/js/main.js' %}"></script>
+</body>
+</html>

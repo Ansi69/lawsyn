@@ -1,0 +1,36 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block content %}    
+    <div id="main">
+        <br>
+        <br>
+        <br>
+        <p align="center" style="font-size: 180%"><b> Тут вы можете ознакомиться с полным выбором имеющих учебников и сборников.</b></p>
+            <img class="center" src={% static "main/img/book.jpg" %} alt="Ошибка загрузки" width="500px" height="300px">
+        <h4>Выберите что вы хотите открыть:</h4>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="btn"> 
+            <a href="{% url "ychebnik" %}"><button class="button button2">Учебники</button></a>
+            <a href="{% url "sbor" %}"><button class="button button2">Сборники</button></a>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+{% endblock  %}    
